@@ -1,0 +1,41 @@
+{
+  "name": "@st-graphics/scrolly",
+  "version": "0.0.0",
+  "description": "Opensource scrollytelling components used by Straits Times Interactive Graphics Team",
+  "main": "dist/StScrolly.common.js",
+  "module": "dist/StScrolly.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "build": "rm -rf dist && mkdir dist && rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yongjun21/st-scrolly.git"
+  },
+  "keywords": [
+    "scrollytelling"
+  ],
+  "author": "Yong Jun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yongjun21/st-scrolly/issues"
+  },
+  "homepage": "https://github.com/yongjun21/st-scrolly#readme",
+  "devDependencies": {
+    "rollup": "^1.19.3",
+    "rollup-plugin-buble": "^0.19.8",
+    "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-css-only": "^1.0.0",
+    "rollup-plugin-sass": "^1.2.2",
+    "rollup-plugin-vue": "^5.0.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "peerDependencies": {
+    "classnames": "^2.2.6",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "vue": "^2.6.10"
+  }
+}

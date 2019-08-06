@@ -1,14 +1,14 @@
 {
   "name": "@st-graphics/scrolly",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Opensource scrollytelling components used by Straits Times Interactive Graphics Team",
-  "main": "dist/StScrolly.common.js",
-  "module": "dist/StScrolly.js",
+  "main": "vue/commonjs/StScrolly.js",
+  "module": "vue/StScrolly.js",
   "directories": {
     "doc": "doc"
   },
   "scripts": {
-    "build": "rm -rf dist && mkdir dist && rollup -c"
+    "build": "rm -rf vue && rm -rf react && mkdir vue && mkdir react && rollup -c"
   },
   "repository": {
     "type": "git",

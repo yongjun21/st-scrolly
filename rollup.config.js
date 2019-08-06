@@ -6,7 +6,8 @@ import commonjs from 'rollup-plugin-commonjs'
 import sass from 'rollup-plugin-sass'
 
 const INPUT_DIR = 'src'
-const OUTPUT_DIR = 'dist'
+const SHARED_DIR = 'shared'
+const CJS_DIR = 'commonjs'
 
 const filenames = [
   'StScrolly',
@@ -15,22 +16,10 @@ const filenames = [
 ]
 
 export default [{
-  input: filenames.map(name => path.join(INPUT_DIR, name + '.vue')),
-  output: [{
-    format: 'esm',
-    dir: OUTPUT_DIR,
-    entryFileNames: '[name].js',
-    chunkFileNames: '[hash].js',
-    sourcemap: true
-  }, {
-    format: 'cjs',
-    dir: OUTPUT_DIR,
-    entryFileNames: '[name].common.js',
-    chunkFileNames: '[hash].js',
-    sourcemap: true
-  }],
+  input: filenames.map(name => path.join(INPUT_DIR, 'vue', name + '.vue')),
+  output: getOutput('vue'),
   plugins: [
-    css({output: path.join(OUTPUT_DIR, 'bundle.css')}),
+    css({output: path.join('vue', 'bundle.css')}),
     vue({css: false}),
     buble(),
     commonjs()
@@ -42,21 +31,25 @@ export default [{
     'classnames'
   ],
   input: filenames.map(name => path.join(INPUT_DIR, 'react', name + '.jsx')),
-  output: [{
-    format: 'esm',
-    dir: path.join(OUTPUT_DIR, 'react'),
-    entryFileNames: '[name].js',
-    chunkFileNames: '[hash].js',
-    sourcemap: true
-  }, {
-    format: 'cjs',
-    dir: path.join(OUTPUT_DIR, 'react'),
-    entryFileNames: '[name].common.js',
-    chunkFileNames: '[hash].js',
-    sourcemap: true
-  }],
+  output: getOutput('react'),
   plugins: [
-    sass({output: path.join(OUTPUT_DIR, 'react', 'bundle.css')}),
+    sass({output: path.join('react', 'bundle.css')}),
     buble({objectAssign: 'Object.assign'})
   ]
 }]
+
+function getOutput (OUTPUT_DIR) {
+  return [{
+    format: 'esm',
+    dir: OUTPUT_DIR,
+    entryFileNames: '[name].js',
+    chunkFileNames: SHARED_DIR + '/[hash].js',
+    sourcemap: true
+  }, {
+    format: 'cjs',
+    dir: path.join(OUTPUT_DIR, CJS_DIR),
+    entryFileNames: '[name].js',
+    chunkFileNames: SHARED_DIR + '/[hash].js',
+    sourcemap: true
+  }]
+}

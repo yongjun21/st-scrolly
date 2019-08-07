@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/yongjun21/st-scrolly#readme",
   "dependencies": {
-    "@st-graphics/react-object-fit-video": "0.0.2",
+    "@st-graphics/react-object-fit-video": "^0.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6"
   }

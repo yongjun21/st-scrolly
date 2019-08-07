@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/yongjun21/st-scrolly#readme",
   "dependencies": {
-    "@st-graphics/object-fit-video": "0.0.2"
+    "@st-graphics/object-fit-video": "^0.0.2"
   }
 }

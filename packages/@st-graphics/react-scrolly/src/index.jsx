@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import './StScrolly.scss'
+import './index.scss'
 
 const supportsSticky = false && window.CSS && window.CSS.supports &&
                       (window.CSS.supports('position', 'sticky') ||

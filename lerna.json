@@ -1,0 +1,6 @@
+{
+  "packages": [
+    "packages/@st-graphics/*"
+  ],
+  "version": "0.0.1"
+}

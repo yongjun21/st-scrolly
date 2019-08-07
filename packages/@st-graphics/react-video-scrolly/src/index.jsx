@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {omit} from './util'
-import './StVideoScrolly.scss'
+import './index.scss'
 
-import ObjectFitVideo from './ObjectFitVideo.jsx'
+import ObjectFitVideo from '@st-graphics/react-object-fit-video'
 
 function StVideoScrolly (props) {
   const $el = useRef(null)

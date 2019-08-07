@@ -16,9 +16,10 @@
 </template>
 
 <script>
-import ObjectFitVideo from './ObjectFitVideo.vue'
+import ObjectFitVideo from '@st-graphics/object-fit-video'
 
 export default {
+  name: 'StVideoScrolly',
   components: {ObjectFitVideo},
   inheritAttrs: false,
   props: {

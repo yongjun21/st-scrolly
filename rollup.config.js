@@ -5,51 +5,61 @@ import css from 'rollup-plugin-css-only'
 import commonjs from 'rollup-plugin-commonjs'
 import sass from 'rollup-plugin-sass'
 
-const INPUT_DIR = 'src'
-const SHARED_DIR = 'shared'
-const CJS_DIR = 'commonjs'
+const PKG_DIR = 'packages/@st-graphics'
 
-const filenames = [
-  'StScrolly',
-  'StVideoScrolly',
-  'ObjectFitVideo'
+const packages = [
+  'scrolly',
+  'video-scrolly',
+  'object-fit-video'
 ]
 
-export default [{
-  input: filenames.map(name => path.join(INPUT_DIR, 'vue', name + '.vue')),
-  output: getOutput('vue'),
-  plugins: [
-    css({output: path.join('vue', 'bundle.css')}),
-    vue({css: false}),
-    buble(),
-    commonjs()
-  ]
-}, {
-  external: [
-    'react',
-    'prop-types',
-    'classnames'
-  ],
-  input: filenames.map(name => path.join(INPUT_DIR, 'react', name + '.jsx')),
-  output: getOutput('react'),
-  plugins: [
-    sass({output: path.join('react', 'bundle.css')}),
-    buble({objectAssign: 'Object.assign'})
-  ]
-}]
+export default [
+  ...packages.map(createVueBuild),
+  ...packages.map(createReactBuild)
+]
 
-function getOutput (OUTPUT_DIR) {
-  return [{
-    format: 'esm',
-    dir: OUTPUT_DIR,
-    entryFileNames: '[name].js',
-    chunkFileNames: SHARED_DIR + '/[hash].js',
-    sourcemap: true
-  }, {
-    format: 'cjs',
-    dir: path.join(OUTPUT_DIR, CJS_DIR),
-    entryFileNames: '[name].js',
-    chunkFileNames: SHARED_DIR + '/[hash].js',
-    sourcemap: true
-  }]
+function createVueBuild (pkg) {
+  return {
+    input: path.join(PKG_DIR, pkg, 'src/index.vue'),
+    output: [{
+      format: 'esm',
+      file: path.join(PKG_DIR, pkg, 'dist/index.js'),
+      sourcemap: true
+    }, {
+      format: 'cjs',
+      file: path.join(PKG_DIR, pkg, 'dist/legacy.js'),
+      sourcemap: true
+    }],
+    plugins: [
+      css({output: path.join(PKG_DIR, pkg, 'dist/bundle.css')}),
+      vue({css: false}),
+      buble(),
+      commonjs()
+    ]
+  }
+}
+
+function createReactBuild (pkg) {
+  pkg = 'react-' + pkg
+  return {
+    external: [
+      'react',
+      'prop-types',
+      'classnames'
+    ],
+    input: path.join(PKG_DIR, pkg, 'src/index.jsx'),
+    output: [{
+      format: 'esm',
+      file: path.join(PKG_DIR, pkg, 'dist/index.js'),
+      sourcemap: true
+    }, {
+      format: 'cjs',
+      file: path.join(PKG_DIR, pkg, 'dist/legacy.js'),
+      sourcemap: true
+    }],
+    plugins: [
+      sass({output: path.join(PKG_DIR, pkg, 'dist/bundle.css')}),
+      buble({objectAssign: 'Object.assign'})
+    ]
+  }
 }

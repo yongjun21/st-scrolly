@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {omit} from './util'
-import './ObjectFitVideo.scss'
+import './index.scss'
 
 const supportsObjectFit = window.CSS && window.CSS.supports &&
                           window.CSS.supports('object-fit', 'cover') &&

@@ -1,0 +1,28 @@
+{
+  "name": "@st-graphics/react-scrolly",
+  "version": "0.0.2",
+  "description": "Opensource scrollytelling components used by Straits Times Interactive Graphics Team",
+  "main": "dist/legacy.js",
+  "module": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yongjun21/st-scrolly.git",
+    "directory": "packages/@st-graphics/react-scrolly"
+  },
+  "keywords": [
+    "react",
+    "react hooks",
+    "scrollytelling"
+  ],
+  "author": "Yong Jun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yongjun21/st-scrolly/issues"
+  },
+  "homepage": "https://github.com/yongjun21/st-scrolly#readme",
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6"
+  }
+}

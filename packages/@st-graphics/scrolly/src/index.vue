@@ -24,6 +24,7 @@ const supportsSticky = window.CSS && window.CSS.supports &&
                        window.CSS.supports('position', '-webkit-sticky'))
 
 export default {
+  name: 'StScrolly',
   props: {
     windowHeight: Number,
     windowTop: {

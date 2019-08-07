@@ -1,0 +1,29 @@
+{
+  "name": "@st-graphics/react-object-fit-video",
+  "version": "0.0.2",
+  "description": "Opensource scrollytelling components used by Straits Times Interactive Graphics Team",
+  "main": "dist/legacy.js",
+  "module": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yongjun21/st-scrolly.git",
+    "directory": "packages/@st-graphics/react-object-fit-video"
+  },
+  "keywords": [
+    "react",
+    "react hooks",
+    "object-fit",
+    "hoc",
+    "polyfill"
+  ],
+  "author": "Yong Jun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yongjun21/st-scrolly/issues"
+  },
+  "homepage": "https://github.com/yongjun21/st-scrolly#readme",
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6"
+  }
+}

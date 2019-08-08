@@ -122,9 +122,6 @@ function getPlaybackRate (props, state) {
 }
 
 function onLoadeddata ($video, cb) {
-  if ($video.readyState > 1) {
-    cb()
-  } else {
-    $video.addEventListener('loadeddata', cb)
-  }
+  if ($video.readyState > 1) cb()
+  $video.addEventListener('loadeddata', cb)
 }

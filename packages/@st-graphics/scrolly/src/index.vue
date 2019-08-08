@@ -7,7 +7,9 @@
     </div>
 
     <div ref="slides" class="slide-container">
-      <slot v-bind="exposedScope"></slot>
+      <slot v-bind="exposedScope">
+        <div class="slide"></div>
+      </slot>
     </div>
 
     <div class="foreground-container">
@@ -19,7 +21,8 @@
 </template>
 
 <script>
-const supportsSticky = window.CSS && window.CSS.supports &&
+const supportsSticky = typeof window !== 'undefined' &&
+                       window.CSS && window.CSS.supports &&
                       (window.CSS.supports('position', 'sticky') ||
                        window.CSS.supports('position', '-webkit-sticky'))
 
@@ -38,11 +41,11 @@ export default {
     dontUseSticky: Boolean
   },
   data () {
-    const windowHeight = this.windowHeight || window.innerHeight
+    const windowHeight = this.windowHeight || 0
     return {
       windowHeight_: windowHeight,
       slideHeights: [windowHeight],
-      scrollPosition: 0
+      scrollPosition: -1
     }
   },
   computed: {
@@ -141,15 +144,16 @@ export default {
     }
   },
   methods: {
-    scrollTo (index) {
-      if (index < 0 || index >= this.slideHeights.length) return null
-      const targetScrollPosition = this.scrollCheckpoints[index] + this.triggerOffset
-      return window.scrollY + this.$el.getBoundingClientRect().top - this.windowTop + targetScrollPosition + 1
+    scrollTo (index, triggerBased = false) {
+      if (index < 0 || index > this.slideHeights.length) return null
+      const initialPosition = window.scrollY + this.$el.getBoundingClientRect().top - this.windowTop
+      const targetOffsetPosition = this.scrollCheckpoints[index] + (triggerBased ? this.triggerOffset : 0)
+      return initialPosition + targetOffsetPosition + 1
     },
     handleScroll () {
       this.scrollPosition = this.windowTop - this.$el.getBoundingClientRect().top
     },
-    handleResize () {
+    measure () {
       const $slides = this.$refs.slides.children
       this.slideHeights = Array.prototype.map
         .call($slides, el => el.getBoundingClientRect().height)
@@ -157,10 +161,10 @@ export default {
     }
   },
   mounted () {
-    this.handleResize()
+    this.measure()
     this.handleScroll()
     this.handleScroll = frameRateLimited(this.handleScroll)
-    this.handleResize = frameRateLimited(this.handleResize)
+    this.handleResize = frameRateLimited(this.measure)
     window.addEventListener('resize', this.handleResize, {capture: true, passive: true})
     window.addEventListener('scroll', this.handleScroll, {capture: true, passive: true})
   },

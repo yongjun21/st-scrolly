@@ -181,9 +181,6 @@ function frameRateLimited (cb, context) {
 }
 
 function onLoadedmetadata ($video, cb) {
-  if ($video.readyState > 0) {
-    cb()
-  } else {
-    $video.addEventListener('loadedmetadata', cb)
-  }
+  if ($video.readyState > 0) cb()
+  $video.addEventListener('loadedmetadata', cb)
 }

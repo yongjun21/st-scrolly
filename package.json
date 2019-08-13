@@ -36,6 +36,6 @@
     "vuepress": "^1.0.3"
   },
   "dependencies": {
-    "@st-graphics/scrolly": "^0.0.3"
+    "@st-graphics/scrolly": "^0.0.4"
   }
 }

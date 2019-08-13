@@ -150,21 +150,25 @@ export default {
       const targetOffsetPosition = this.scrollCheckpoints[index] + (triggerBased ? this.triggerOffset : 0)
       return initialPosition + targetOffsetPosition + 1
     },
-    handleScroll () {
-      this.scrollPosition = this.windowTop - this.$el.getBoundingClientRect().top
-    },
     measure () {
       const $slides = this.$refs.slides.children
       this.slideHeights = Array.prototype.map
         .call($slides, el => el.getBoundingClientRect().height)
+    },
+    handleScroll () {
+      this.measure()
+      this.scrollPosition = this.windowTop - this.$el.getBoundingClientRect().top
+    },
+    handleResize () {
+      this.measure()
+      this.scrollPosition = this.windowTop - this.$el.getBoundingClientRect().top
       this.windowHeight_ = this.windowHeight || window.innerHeight
     }
   },
   mounted () {
-    this.measure()
-    this.handleScroll()
+    this.handleResize()
+    this.handleResize = frameRateLimited(this.handleResize)
     this.handleScroll = frameRateLimited(this.handleScroll)
-    this.handleResize = frameRateLimited(this.measure)
     window.addEventListener('resize', this.handleResize, {capture: true, passive: true})
     window.addEventListener('scroll', this.handleScroll, {capture: true, passive: true})
   },

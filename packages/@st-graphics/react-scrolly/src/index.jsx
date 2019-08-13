@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import './index.scss'
 
-const supportsSticky = false && window.CSS && window.CSS.supports &&
+const supportsSticky = typeof window !== 'undefined' &&
+                       window.CSS && window.CSS.supports &&
                       (window.CSS.supports('position', 'sticky') ||
                        window.CSS.supports('position', '-webkit-sticky'))
 
@@ -31,20 +32,25 @@ function StScrolly (props) {
   const exposedScope = getExposedScope(props, state)
   const stickyStyle = getStickyStyle(props, state)
 
-  const handleScroll = useCallback(() => {
-    setScrollPosition(props.windowTop - $el.current.getBoundingClientRect().top)
-  }, [props.windowTop])
-
-  const handleResize = useCallback(() => {
+  const measure = useCallback(() => {
     const slideHeights = Array.prototype.map
       .call($slides.current.children, el => el.getBoundingClientRect().height)
     setSlideHeights(slideHeights)
+  }, [])
+
+  const handleScroll = useCallback(() => {
+    measure()
+    setScrollPosition(props.windowTop - $el.current.getBoundingClientRect().top)
+  }, [measure, props.windowTop])
+
+  const handleResize = useCallback(() => {
+    measure()
+    setScrollPosition(props.windowTop - $el.current.getBoundingClientRect().top)
     setWindowHeight(props.windowHeight || window.innerHeight)
-  }, [props.windowHeight])
+  }, [measure, props.windowHeight])
 
   useEffect(() => {
     handleResize()
-    handleScroll()
     const _handleResize = frameRateLimited(handleResize)
     const _handleScroll = frameRateLimited(handleScroll)
     window.addEventListener('resize', _handleResize, {capture: true, passive: true})

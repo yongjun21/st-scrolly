@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import './index.scss'
 
-const supportsSticky = typeof window !== 'undefined' &&
-                       window.CSS && window.CSS.supports &&
-                      (window.CSS.supports('position', 'sticky') ||
-                       window.CSS.supports('position', '-webkit-sticky'))
+const supportsSticky = (function () {
+  if (typeof window === 'undefined') return true
+  const supports = window.CSS && window.CSS.supports
+  if (!supports) return false
+  return supports('position', 'sticky') || supports('position', '-webkit-sticky')
+})()
 
 function StScrolly (props) {
   const $el = useRef(null)

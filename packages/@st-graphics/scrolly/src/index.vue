@@ -21,10 +21,12 @@
 </template>
 
 <script>
-const supportsSticky = typeof window !== 'undefined' &&
-                       window.CSS && window.CSS.supports &&
-                      (window.CSS.supports('position', 'sticky') ||
-                       window.CSS.supports('position', '-webkit-sticky'))
+const supportsSticky = (function () {
+  if (typeof window === 'undefined') return true
+  const supports = window.CSS && window.CSS.supports
+  if (!supports) return false
+  return supports('position', 'sticky') || supports('position', '-webkit-sticky')
+})()
 
 export default {
   name: 'StScrolly',
@@ -218,6 +220,8 @@ function clampedInterpolate (v, v0, v1) {
   .foreground {
     box-sizing: border-box;
     width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
   }
 
   .background-container {

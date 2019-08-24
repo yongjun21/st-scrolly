@@ -63,11 +63,20 @@ function StScrolly (props) {
     }
   }, [handleScroll, handleResize])
 
-  const background = props.renderBackground && props.renderBackground(exposedScope)
-  const foreground = props.renderForeground && props.renderForeground(exposedScope)
-  const children = props.children && (
-    typeof props.children === 'function' ? props.children(exposedScope) : props.children
-  )
+  const background =
+    typeof props.renderBackground === 'function'
+      ? props.renderBackground(exposedScope)
+      : props.renderBackground
+  const foreground =
+    typeof props.renderForeground === 'function'
+      ? props.renderForeground(exposedScope)
+      : props.renderForeground
+  const children =
+    props.children == null
+      ? (<div className="slide"></div>)
+      : typeof props.children === 'function'
+        ? props.children(exposedScope)
+        : props.children
 
   return (
     <div className={classNames(props.className, 'st-scrolly', {active})} ref={$el}>
@@ -96,8 +105,16 @@ StScrolly.propTypes = {
   windowTop: PropTypes.number,
   triggerOffset: PropTypes.number,
   dontUseSticky: PropTypes.bool,
-  renderBackground: PropTypes.func,
-  renderForeground: PropTypes.func,
+  renderBackground: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.func
+  ]),
+  renderForeground: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.func
+  ]),
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),

@@ -1,6 +1,6 @@
 {
   "name": "@st-graphics/object-fit-video",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Opensource scrollytelling components used by Straits Times Interactive Graphics Team",
   "main": "dist/legacy.js",
   "module": "dist/indexjs",

@@ -1,0 +1,13 @@
+.demo-slide-index {
+  .slide {
+    padding: 60vh 10% 0;
+  }
+
+  .background > div {
+    height: 100%;
+
+    & > div {
+      height: 50%;
+    }
+  }
+}

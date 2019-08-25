@@ -1,6 +1,8 @@
+# Guide
+
 ## Sticky background
 
-<div style="text-align: center;">
+<div style="text-align: center; margin-top: 1rem;">
   <iphone-mockup style="height: 40vh;" src="/demos/sticky" />
   <macbook-mockup style="height: 40vh;" src="/demos/sticky" />
 </div>

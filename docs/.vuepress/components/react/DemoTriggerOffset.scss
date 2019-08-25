@@ -1,0 +1,15 @@
+.demo-trigger-offset {
+  .foreground > div {
+    height: 100%;
+  }
+
+  label {
+    margin-top: 16px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  input[type="number"] {
+    width: 50px;
+  }
+}

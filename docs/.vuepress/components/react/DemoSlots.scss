@@ -1,0 +1,21 @@
+.demo-slots {
+  .slide {
+    padding: 60vh 10% 0;
+  }
+
+  .background > div,
+  .foreground > div {
+    position: relative;
+    height: 50%;
+  }
+
+  .foreground > div {
+    background-color: red;
+    top: 0;
+  }
+
+  .background > div {
+    background-color: blue;
+    top: 50%;
+  }
+}

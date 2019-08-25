@@ -1,0 +1,23 @@
+.demo-enter-exit {
+  .slide {
+    padding: 60vh 10% 0;
+  }
+
+  .background {
+    background-color: grey;
+  }
+
+  .background > div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    mix-blend-mode: overlay;
+
+    & > div {
+      height: 50%;
+    }
+  }
+}

@@ -11,12 +11,16 @@ module.exports = {
   themeConfig: {
     repo: 'yongjun21/st-scrolly',
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/' }
+      {text: 'Home', link: '/'},
+      {text: 'Guide', items: [
+        {text: 'Vue', link: '/guide/'},
+        {text: 'React', link: '/react/'}
+      ]}
     ],
     sidebar: [
       '/',
-      ['/guide/', 'Guide']
+      ['/guide/', 'Guide'],
+      ['/react/', 'Using with React']
     ]
   }
 }

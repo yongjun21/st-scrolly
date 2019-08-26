@@ -49,7 +49,7 @@ function StScrolly (props) {
     measure()
     setScrollPosition(props.windowTop - $el.current.getBoundingClientRect().top)
     setWindowHeight(props.windowHeight || window.innerHeight)
-  }, [measure, props.windowHeight])
+  }, [measure, props.windowHeight, props.windowTop])
 
   useEffect(() => {
     handleResize()

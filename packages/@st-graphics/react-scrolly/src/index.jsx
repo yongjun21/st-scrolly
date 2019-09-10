@@ -106,18 +106,15 @@ StScrolly.propTypes = {
   triggerOffset: PropTypes.number,
   dontUseSticky: PropTypes.bool,
   renderBackground: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
     PropTypes.func
   ]),
   renderForeground: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
     PropTypes.func
   ]),
   children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.node,
     PropTypes.func
   ])
 }

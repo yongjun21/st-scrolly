@@ -105,7 +105,10 @@ StVideoScrolly.propTypes = {
   progress: PropTypes.number.isRequired,
   framerate: PropTypes.number,
   maxspeed: PropTypes.number,
-  renderArtefacts: PropTypes.func
+  renderArtefacts: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func
+  ])
 }
 
 StVideoScrolly.defaultProps = {

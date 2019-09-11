@@ -7,6 +7,16 @@ const supportsObjectFit = window.CSS && window.CSS.supports &&
                           window.CSS.supports('object-fit', 'cover') &&
                           !/Edge/.test(window.navigator.userAgent)
 
+const propTypes = {
+  objectFit: PropTypes.oneOf(['fill', 'contain', 'cover', 'scale-down', 'none']),
+  objectPosition: PropTypes.string
+}
+
+const defaultProps = {
+  objectFit: 'cover',
+  objectPosition: '50% 50%'
+}
+
 const ObjectFitVideo = React.forwardRef((props, ref) => {
   const $el = useRef(null)
 
@@ -69,15 +79,8 @@ const ObjectFitVideo = React.forwardRef((props, ref) => {
   )
 })
 
-ObjectFitVideo.propTypes = {
-  objectFit: PropTypes.oneOf(['fill', 'contain', 'cover', 'scale-down', 'none']),
-  objectPosition: PropTypes.string
-}
-
-ObjectFitVideo.defaultProps = {
-  objectFit: 'cover',
-  objectPosition: '50% 50%'
-}
+ObjectFitVideo.propTypes = propTypes
+ObjectFitVideo.defaultProps = defaultProps
 
 export default ObjectFitVideo
 

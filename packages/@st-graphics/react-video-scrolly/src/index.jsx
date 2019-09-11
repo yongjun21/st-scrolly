@@ -5,6 +5,21 @@ import './index.scss'
 
 import ObjectFitVideo from '@st-graphics/react-object-fit-video'
 
+const propTypes = {
+  progress: PropTypes.number.isRequired,
+  framerate: PropTypes.number,
+  maxspeed: PropTypes.number,
+  renderArtefacts: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func
+  ])
+}
+
+const defaultProps = {
+  framerate: 60,
+  maxspeed: 4
+}
+
 function StVideoScrolly (props) {
   const $el = useRef(null)
   const video = useRef(null)
@@ -101,20 +116,8 @@ function StVideoScrolly (props) {
   )
 }
 
-StVideoScrolly.propTypes = {
-  progress: PropTypes.number.isRequired,
-  framerate: PropTypes.number,
-  maxspeed: PropTypes.number,
-  renderArtefacts: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.func
-  ])
-}
-
-StVideoScrolly.defaultProps = {
-  framerate: 60,
-  maxspeed: 4
-}
+StVideoScrolly.propTypes = propTypes
+StVideoScrolly.defaultProps = defaultProps
 
 export default StVideoScrolly
 

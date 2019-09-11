@@ -3,13 +3,13 @@ import React from 'react'
 export default StScrolly
 
 declare const StScrolly: React.FunctionComponent<{
-  className?: string,
-  windowTop?: number,
-  windowHeight?: number,
-  triggerOffset?: number,
-  dontUseSticky?: boolean,
-  renderBackground?: StScrolly.RenderProp,
-  renderForeground?: StScrolly.RenderProp
+  className?: string;
+  windowTop?: number;
+  windowHeight?: number;
+  triggerOffset?: number;
+  dontUseSticky?: boolean;
+  renderBackground?: StScrolly.RenderProp;
+  renderForeground?: StScrolly.RenderProp;
 }>
 
 declare namespace StScrolly {

@@ -10,6 +10,31 @@ const supportsSticky = (function () {
   return supports('position', 'sticky') || supports('position', '-webkit-sticky')
 })()
 
+const propTypes = {
+  className: PropTypes.string,
+  windowHeight: PropTypes.number,
+  windowTop: PropTypes.number,
+  triggerOffset: PropTypes.number,
+  dontUseSticky: PropTypes.bool,
+  renderBackground: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func
+  ]),
+  renderForeground: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func
+  ]),
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func
+  ])
+}
+
+const defaultProps = {
+  windowTop: 0,
+  triggerOffset: 0
+}
+
 function StScrolly (props) {
   const $el = useRef(null)
   const $slides = useRef(null)
@@ -99,30 +124,8 @@ function StScrolly (props) {
   )
 }
 
-StScrolly.propTypes = {
-  className: PropTypes.string,
-  windowHeight: PropTypes.number,
-  windowTop: PropTypes.number,
-  triggerOffset: PropTypes.number,
-  dontUseSticky: PropTypes.bool,
-  renderBackground: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.func
-  ]),
-  renderForeground: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.func
-  ]),
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.func
-  ])
-}
-
-StScrolly.defaultProps = {
-  windowTop: 0,
-  triggerOffset: 0
-}
+StScrolly.propTypes = propTypes
+StScrolly.defaultProps = defaultProps
 
 export default StScrolly
 

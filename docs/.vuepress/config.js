@@ -15,12 +15,14 @@ module.exports = {
       {text: 'Guide', items: [
         {text: 'Vue', link: '/guide/'},
         {text: 'React', link: '/react/'}
-      ]}
+      ]},
+      {text: 'API', link: '/api/'}
     ],
     sidebar: [
       '/',
       ['/guide/', 'Guide'],
-      ['/react/', 'Using with React']
+      ['/react/', 'Using with React'],
+      ['/api/', 'API']
     ]
   }
 }

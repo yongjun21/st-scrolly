@@ -30,7 +30,7 @@ export default {
   methods: {
     getBgStyle (index, enter, exit) {
       const {slides} = this
-      const opacity = enter(index, 400) * exit(index, 400)
+      const opacity = Math.min(enter(index, 400), exit(index, 400))
       return {
         ...slides[index].bgStyle,
         opacity

@@ -13,7 +13,7 @@ export default {
       h('img', {
         attrs: {
           height: '100%',
-          src: require('./assets/macbook-mockup.png')
+          src: require('../../assets/macbook-mockup.png')
         }
       }),
       h('iframe', {

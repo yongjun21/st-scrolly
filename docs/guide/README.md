@@ -43,7 +43,7 @@ Place sticky background content in the `background`-named slot. You can place mu
 :::
 
 ::: tip
-The scroll **distance** over which background content stays sticky is specified by add a `height` CSS property on the `.slide` class. You might wonder where does the `.slide` class come in. This will be explained further in later parts.
+The scroll **distance** over which background content stays sticky is specified by adding a `height` CSS property on the `.slide` class. You might wonder where does the `.slide` class come in. This will be explained further in later parts.
 :::
 
 ## Basic structure
@@ -95,7 +95,7 @@ export default {
 </script>
 ```
 
-Sometimes, we want our sticky content to be in the foreground. The only change needed is putting them in the `foreground`-named slot instead. Lying between foreground & background is our **slides** content. Slides are **static** positioned containers that follow the normal flow of your document. Unlike their sticky couterparts, they behaves like any other "scrollable" parts of your document.
+Sometimes, we want our sticky content to be in the foreground. The only change needed is putting them in the `foreground`-named slot instead. In between foreground and background is our **slides** content. Slides are **static** positioned containers that follow the normal flow of your document. Contrasted their sticky couterparts, they behaves like any other "scrollable" parts of your document.
 
 ::: tip
 Anything that is not wrapped in a `<template v-slot:background>` or `<template v-slot:foreground>` tag goes into the default slot and becomes **slide** elements. The `<template v-slot:default>` wrapper in the example above is optional but recommended for better code organization.
@@ -105,7 +105,10 @@ Anything that is not wrapped in a `<template v-slot:background>` or `<template v
 1. `<div>` tags should be used for **slide** elements as we require **slide** to be block elements.
 2. There should be no gap (`margin-top` or `margin-bottom`) between adjacent **slide** elements.
 3. The `.slide` class is optional, you can use any CSS selector to set a fixed height on the slide. Alternative is to have slide height implicitly set by the slide content.
-4. **Under no circumstances should you use `vh` for slide height. Always use a static value (eg. `height: 800px;`) for height or let it be implicit by slide content.** We will talk a bit more on this later.
+:::
+
+::: danger
+4. **`vh` should never for slide height.** Always use a static value (eg. 800px) for height or let it be implicit by slide content. We will talk a bit more on this later.
 :::
 
 ::: tip
@@ -184,7 +187,7 @@ export default {
 ```
 
 ::: tip
-In the example above, we have 3 slides populated using v-for directives. `slideIndex` exposed through the `background` slot scope: `<template v-slot:background="{slideIndex}">` can take 5 states: -1, 0, 1, 2 & 3. Background style can be assigned declaratively by referencing the `slideIndex` variable.
+In the example above, we have 3 slides populated using v-for directives. `slideIndex` which is exposed through the `background` slot scope `<template v-slot:background="{slideIndex}">` can take 5 states: -1, 0, 1, 2 & 3. Background style can be assigned declaratively by referencing the `slideIndex` variable.
 :::
 
 ::: warning About slideIndex
@@ -196,6 +199,8 @@ The number of states `slideIndex` can take is always 2 more than the number of s
 - By the time we reach the last slide, `slideIndex` will be N - 1
 - After the last slide scroll out, `slideIndex` will be N
 - Between 0 and N - 1, scrolly is considered **active**. Contents inside `background` and `foreground` slots will be sticky
+
+![slideIndex visualized](../assets/slideIndex.jpg)
 :::
 
 ::: tip
@@ -230,12 +235,12 @@ export default {
 :::
 
 ::: tip
-`slideIndex` is not only exposed through the `background` slot scope. You can access it on the `foreground` and `default` slot scope also (eg. `<template v-slot:background="{slideIndex}">`, `<template v-slot="{slideIndex}">`). Any slot content can be made dynamic through the reactive `slideIndex` variable. Besides `slideIndex`, other useful variables are also exposed on the slot scope. Refer to [API](/api/) for the full list.
+`slideIndex` is not only exposed through the `background` slot scope. You can access it on the `foreground` and `default` slot scope also (eg. `<template v-slot:background="{slideIndex}">`, `<template v-slot:default="{slideIndex}">`). Any slot content can be made dynamic through the reactive `slideIndex` variable. Besides `slideIndex`, other useful variables are also exposed on the slot scope. Refer to [API](/api/#slot-scope) for the full list.
 :::
 
 ## Adjust trigger points
 
-Intersection Observer API provides a `rootMargin` to fine-tune when a trigger should be fired. Sometimes, user may want the state transition to happen **before** the target element enters viewport. Our library has a similar concept called `triggerOffset`. It is one of the `props` you can set on the scrolly component `<st-scrolly :trigger-offset="customTriggerOffset">`. By default, `slideIndex` increment when the **top** of the slide is align with the **top** of the window. With `triggerOffset` you can **offset** the "trigger point".
+Intersection Observer API provides a `rootMargin` to fine-tune when a trigger should be fired. Sometimes, user may want the state transition to happen **before** the target element enters viewport. Our library has a similar concept called `triggerOffset`. It is one of the `props` you can set on the scrolly component `<st-scrolly :trigger-offset="customTriggerOffset">`. By default, `slideIndex` increment when the **top** of the slide is align with the **top** of the window. With `triggerOffset` you can **offset** this "trigger point".
 
 ### Using `triggerOffset` props
 
@@ -289,8 +294,10 @@ export default {
 </script>
 ```
 
-::: warning
+::: warning About triggerOffset
 Negative `triggerOffset` will make slide transition happens **earlier** (i.e. before the top of the slide reach the top of the window) while positive `triggerOffset` will **delay** slide transition (i.e. after top of the slide has scroll past the top of the window). 
+
+![triggerOffset visualized](../assets/triggerOffset.jpg)
 :::
 
 ## Position the sticky window
@@ -372,7 +379,7 @@ export default {
   methods: {
     getBgStyle (index, enter, exit) {
       const {slides} = this
-      const opacity = enter(index, 400) * exit(index, 400)
+      const opacity = Math.min(enter(index, 400), exit(index, 400))
       return {
         ...slides[index].bgStyle,
         opacity
@@ -397,3 +404,35 @@ export default {
 }
 </style>
 ```
+
+::: warning About enter & exit
+Unlike `slideIndex` which is an **integer**, `enter` & `exit` is a pair of **function** which can be used together or individually to implement smooth transition. The functions have the following signature:
+
+```ts
+type t = number // t ∈ [0, 1]
+declare function enter (index: number, distance?: number, offset?: number): t
+declare function exit (index: number, distance?: number, offset?: number): t
+```
+
+User will pass in slide index *i* and transition distance *d* as parameters. The functions will return a number *t* between 0 to 1.
+
+- When the indexed *i* slide starts entering, *t* will be 0
+- As the slide enters, *t* gradually **increases** to 1
+- When the slide completes enter, *t* will be 1
+- When the indexed *i* slide starts exiting, *t* will be 1
+- As the slide exits, *t* gradually **decreases** to 0
+- When the slide completes enter, *t* will be 0
+- The length over which *t* transit from 0 > 1 & 1 > 0 is controlled by the *d* parameter.
+
+![enter & exit visualized](../assets/enter-exit.jpg)
+:::
+
+::: tip
+Why does `enter`/`exit` output a number between 0 and 1? *t* ∈ [0, 1] is what we call an interpolation parameter. By passing it into an [interpolator function](https://github.com/d3/d3-interpolate), you can interpolate between any two values. Say you want to interpolate between two numeric values A & B. You can use the linear interpolator `t => (1 - t) * A + t * B`. More complex interpolators allow you to interpolate non-numeric data types. You can even implement easing by applying one of the Robert Penner's [easing functions](https://github.com/d3/d3-ease) before passing *t* into the interpolator. In simple cases such as the CSS property `opacity`, *t* can be used directly.
+
+To apply **both** `enter` and `exit`, use the expression `Math.min(enter(i, d), exit(i, d))`
+:::
+
+::: danger
+**`slideIndex` should never be used together with `enter`/`exit` in the same expression.** `enter(slideIndex, d)` is an anti-pattern will lead to unexpected outcome. Always use a fixed slide index for each `enter`/`exit` call.
+:::

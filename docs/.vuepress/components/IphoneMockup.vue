@@ -13,7 +13,7 @@ export default {
       h('img', {
         attrs: {
           height: '100%',
-          src: require('./assets/iphone-mockup.png')
+          src: require('../../assets/iphone-mockup.png')
         }
       }),
       h('iframe', {

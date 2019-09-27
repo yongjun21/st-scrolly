@@ -17,3 +17,10 @@ https://graphics.straitstimes.com/STI/STIMEDIA/Interactives/2019/08/ndr-2019-tra
 ## Documentations
 
 https://st-scrolly.netlify.com
+
+
+## Sample repo
+
+https://github.com/yongjun21/jsconf-china-scrollytelling-workshop
+
+https://github.com/yongjun21/jsconf-china-scrollytelling-workshop/tree/react

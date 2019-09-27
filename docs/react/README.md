@@ -203,7 +203,7 @@ The number of states `slideIndex` can take is always 2 more than the number of s
 - After the last slide scroll out, `slideIndex` will be N
 - Between 0 and N - 1, scrolly is considered **active**. Contents inside `background` and `foreground` slots will be sticky
 
-![slideIndex visualized](../assets/slideIndex.jpg)
+![slideIndex visualized](/assets/slideIndex.jpg)
 :::
 
 ::: tip
@@ -287,7 +287,7 @@ export default DemoTriggerOffset
 ::: warning About triggerOffset
 Negative `triggerOffset` will make slide transition happens **earlier** (i.e. before the top of the slide reach the top of the window) while positive `triggerOffset` will **delay** slide transition (i.e. after top of the slide has scroll past the top of the window). 
 
-![triggerOffset visualized](../assets/triggerOffset.jpg)
+![triggerOffset visualized](/assets/triggerOffset.jpg)
 :::
 
 ## Positioning the sticky window
@@ -419,7 +419,7 @@ User will pass in slide index *i* and transition distance *d* as parameters. The
 - When the slide completes enter, *t* will be 0
 - The length over which *t* transit from 0 > 1 & 1 > 0 is controlled by the *d* parameter.
 
-![enter & exit visualized](../assets/enter-exit.jpg)
+![enter & exit visualized](/assets/enter-exit.jpg)
 :::
 
 ::: tip
@@ -431,3 +431,19 @@ To apply **both** `enter` and `exit`, use the expression `Math.min(enter(i, d), 
 ::: danger
 **`slideIndex` should never be used together with `enter`/`exit` in the same expression.** `enter(slideIndex, d)` is an anti-pattern will lead to unexpected outcome. Always use a fixed slide index for each `enter`/`exit` call.
 :::
+
+## FAQs
+
+### Why can't I use `vh` for slide height?
+
+An often encountered bug for new users is the `slideIndex` jumping unexpectedly from one value to another when using scrolly on an Android browser. This is almost always the result of setting slide height based on `vh`. We will breakdown how this problem arises:
+
+1. User swipes to scroll down on an Android browser.
+2. Default behavior on Android is to collapse the address bar to free up more screen space
+3. This happens not only at the top of the document but anyway within the document (scroll up expand address bar, scroll down collapse address bar).
+4. As address bar collapses, `window.innerHeight` increases and correspondingly `vh` increases.
+5. Since slide height is defined using `vh`, every slide will have their height increased.
+6. `slideIndex` is computed using scroll offset and slide heights. `scrollPosition` remains but the increased slide heights push down all the trigger points.
+7. Hence `slideIndex` jumps to a lower value.
+
+The solution obviously is to change slide height to a static value (eg. 800px). We believe there is no good stylistic reason to size slide according to window height. Even though we use a `div`, **slide** is really an abstract construct, it is a container to mark out the position of scene transition. Unless `background-color` applied on the container, user will not be able to any difference. Granted there are cases where we want slide height to be **at least** window height. In this case we should set slide height to a sufficiently big number (eg. 1200px) and include a `min-height: 100vh;` to handle edge case of very large display. On most mobile platform, the min height constraint will not be breached and slide height is effectively static.

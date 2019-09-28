@@ -24,5 +24,8 @@ module.exports = {
       ['/react/', 'Using with React'],
       ['/api/', 'API']
     ]
-  }
+  },
+  plugins: [
+    ['@vuepress/google-analytics', {ga: 'UA-116302211-2'}]
+  ]
 }

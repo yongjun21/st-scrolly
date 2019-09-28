@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/yongjun21/st-scrolly#readme",
   "devDependencies": {
+    "@vuepress/plugin-google-analytics": "^1.1.0",
     "lerna": "^3.16.4",
     "rollup": "^1.19.3",
     "rollup-plugin-buble": "^0.19.8",

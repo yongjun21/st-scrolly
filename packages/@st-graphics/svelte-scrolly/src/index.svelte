@@ -196,50 +196,50 @@ const handleResize = frameRateLimited(() => {
 onMount(handleResize)
 </script>
 
-<style lang="scss">
+<style>
 .st-scrolly {
   position: relative;
   width: 100%;
+}
 
-  .background-container,
-  .foreground-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
+.st-scrolly .background-container,
+.st-scrolly .foreground-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 
-  .background,
-  .foreground {
-    box-sizing: border-box;
-    width: 100%;
-    position: -webkit-sticky;
-    position: sticky;
-  }
+.st-scrolly .background,
+.st-scrolly .foreground {
+  box-sizing: border-box;
+  width: 100%;
+  position: -webkit-sticky;
+  position: sticky;
+}
 
-  .background-container {
-    z-index: 0;
-  }
+.st-scrolly .background-container {
+  z-index: 0;
+}
 
-  .slide-container {
-    position: relative;
-    z-index: 1;
-    pointer-events: none;
+.st-scrolly .slide-container {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
 
-    & > * {
-      box-sizing: border-box;
-    }
-  }
+.st-scrolly .slide-container > * {
+  box-sizing: border-box;
+}
 
-  .foreground-container {
-    z-index: 2;
-    pointer-events: none;
-  }
+.st-scrolly .foreground-container {
+  z-index: 2;
+  pointer-events: none;
+}
 
-  .foreground *,
-  .slide * {
-    pointer-events: auto;
-  }
+.st-scrolly .foreground *,
+.st-scrolly .slide * {
+  pointer-events: auto;
 }
 </style>

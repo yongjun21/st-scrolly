@@ -1,10 +1,8 @@
 {
   "name": "@st-graphics/svelte-scrolly",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "Opensource scrollytelling components used by Straits Times Interactive Graphics Team",
-  "main": "dist/legacy.js",
-  "module": "dist/index.js",
-  "svelte": "src/index.svelte",
+  "main": "src/index.svelte",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yongjun21/st-scrolly.git",

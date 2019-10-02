@@ -47,7 +47,9 @@
   </div>
 </div>
 
-<svelte:window on:resize={handleResize} on:scroll={handleScroll}/>
+<svelte:window
+  on:resize|capture|passive={handleResize}
+  on:scroll|capture|passive={handleScroll}/>
 
 <script context="module">
 const supportsSticky = (function () {
@@ -107,6 +109,7 @@ $: active = scrollPosition >= 0 && scrollPosition < scrollLength
 
 $: offsetPosition = scrollPosition - triggerOffset
 
+// slot props
 $: slideIndex = scrollCheckpoints.filter(h => offsetPosition >= h).length - 1
 $: slideCount = scrollCheckpoints.length - 1
 $: fromPrevSlide = offsetPosition < 0 ? Infinity : offsetPosition - scrollCheckpoints[slideIndex]

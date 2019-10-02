@@ -1,6 +1,6 @@
 {
   "name": "@st-graphics/svelte-scrolly",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Opensource scrollytelling components used by Straits Times Interactive Graphics Team",
   "main": "src/index.svelte",
   "repository": {

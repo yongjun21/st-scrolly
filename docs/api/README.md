@@ -43,7 +43,7 @@ interface EnterExitFunction {
 }
 
 interface ProgressFunction {
-  (endEarly?: boolean, offset?: number): number; // returns t ∈ [0, 1]
+  (exitOnBottomAlign?: boolean, offset?: number): number; // returns t ∈ [0, 1]
   between (startIndex?: number, endIndex?: number): ProgressFunction;
   at (index?: number): ProgressFunction;
 }
@@ -84,4 +84,4 @@ Refer to [guide](/guide/#using-enter-exit-from-slot-scope). `exit` accepts a thi
 
 ### `progress`
 
-TODO
+Refer to [guide](/guide/#using-progress-from-slot-scope). `progress` accepts a second `offset` parameter that modifies the behavior of the function similarly to `triggerOffset` prop above. 

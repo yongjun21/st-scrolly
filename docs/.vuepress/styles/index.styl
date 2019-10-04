@@ -3,3 +3,17 @@
   max-height: none !important;
   width: 100%;
 }
+
+div.language-ts.line-numbers-mode {
+  pre {
+    padding-left: 1.5em;
+  }
+
+  .line-numbers-wrapper {
+    display: none;
+  }
+
+  &::after {
+    content: none;
+  }
+}

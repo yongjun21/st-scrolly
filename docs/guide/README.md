@@ -108,7 +108,7 @@ Anything that is not wrapped in a `<template v-slot:background>` or `<template v
 :::
 
 ::: danger
-4. **`vh` should never for slide height.** Always use a static value (eg. 800px) for height or let it be implicit by slide content. We will talk a bit more on this later.
+4. **Avoid using `vh` for slide height.** Always use a static value (eg. 800px) for height or let it be implicit by slide content. We will talk a bit more on this later.
 :::
 
 ::: tip
@@ -434,21 +434,83 @@ To apply **both** `enter` and `exit`, use the expression `Math.min(enter(i, d), 
 :::
 
 ::: danger
-**`slideIndex` should never be used together with `enter`/`exit` in the same expression.** `enter(slideIndex, d)` is an anti-pattern will lead to unexpected outcome. Always use a fixed slide index for each `enter`/`exit` call.
+**`slideIndex` should never be used together with `enter`/`exit` in the same expression.** `enter(slideIndex, d)` is an anti-pattern and will lead to unexpected outcome. Always use a fixed slide index for each `enter`/`exit` call.
+:::
+
+### Using `progress` from slot scope
+
+While `enter`/`exit` is well suited for use cases like enter and exit transitions, sometimes we want to track scroll progress and `enter`/`exit` is not the best tool for this as they are based on a single "anchor point" (controlled by the slide index argument). **progress** on the other hand has **two** anchor points **start** and **end** therefore we need a different API. `progress` which is exposed on the slot scoped is what we need.
+
+<div style="text-align: center; margin-top: 1rem;">
+  <iphone-mockup style="height: 40vh;" src="/demos/progress" />
+  <macbook-mockup style="height: 40vh;" src="/demos/progress" />
+</div>
+
+```vue{3,7,11}
+<template>
+  <st-scrolly class="demo-progress">
+    <template v-slot:background="{progress}">
+      <div class="centered">
+        <div class="card">
+          <code>progress()</code><br>
+          = {{progress() | format}}
+        </div>
+        <div class="card">
+          <code>progress(true)</code><br>
+          = {{progress(true) | format}}
+        </div>
+      </div>
+    </template>
+  </st-scrolly>
+</template>
+
+<script>
+import '@st-graphics/scrolly/dist/bundle.css'
+import StScrolly from '@st-graphics/scrolly'
+
+export default {
+  filters: {
+    format: v => (v * 100).toFixed() + '%'
+  },
+  components: {StScrolly}
+}
+</script>
+```
+
+::: warning About progress
+Like `enter` & `exit`, `progress` is a **function** that returns a number between 0 to 1:
+
+```ts
+type t = number // t ∈ [0, 1]
+declare function progress (exitOnBottomAlign?: boolean, offset?: number): t
+```
+
+However, it is different from `enter`/`exit` in that instead of defining a slide index and a scroll distance (to anchor the transition), `progress` lets you define both the start and the end. 
+
+You can call the function without providing any argument. By default, start is upon the first slide entering and end is upon the last slide exiting. 
+
+Sometimes we want to track scroll progress during which content is sticky. But sticky content do not "unstick" when the last slide completely exit (when **top** of window aligns with bottom of last slide): they "unsticky" when the **bottom** of the window aligns with the bottom of the last slide. See diagram below.
+
+To fix this, `progress`'s first argument is a boolean flag to indicate progress should end when bottom of the last slide aligns with bottom of window instead of top.
+
+![progress visualized](/assets/progress-exitOn.jpg)
+
+To track progress only on certain slides, you can use the `.at` or `.between` modifiers. See examples below. `.between` works the same as `.slice` on array.
+
+![progress visualized](/assets/progress.jpg)
 :::
 
 ## FAQs
 
 ### Why can't I use `vh` for slide height?
 
-An often encountered bug for new users is the `slideIndex` jumping unexpectedly from one value to another when using scrolly on an Android browser. This is almost always the result of setting slide height based on `vh`. We will breakdown how this problem arises:
+An often encountered bug for new users is `slideIndex` jumping unexpectedly from one value to another when keyboard drawer opens and closes on Android browsers. This is almost always the result of setting slide height based on `vh`. We will breakdown how this problem arises:
 
-1. User swipes to scroll down on an Android browser.
-2. Default behavior on Android is to collapse the address bar to free up more screen space
-3. This happens not only at the top of the document but anyway within the document (scroll up expand address bar, scroll down collapse address bar).
-4. As address bar collapses, `window.innerHeight` increases and correspondingly `vh` increases.
-5. Since slide height is defined using `vh`, every slide will have their height increased.
-6. `slideIndex` is computed using scroll offset and slide heights. `scrollPosition` remains but the increased slide heights push down all the trigger points.
-7. Hence `slideIndex` jumps to a lower value.
+1. User interaction on certain elements (eg. <input>) causes keyboard drawer to open.
+2. This trigger a window resize event which shrink `window.innerHeight` by an amount equal to the keyboard drawer height. Correspondingly `vh` decreases.
+3. Since slide height is defined using `vh`, every slide will have their height decreased.
+4. `slideIndex` is computed using scroll offset and slide heights. Browser keeps scroll offset constant but the decreased slide heights pull forward all the trigger points.
+5. Hence `slideIndex` jumps to a higher value. It appears as if scroll position jumps to the bottom of the scrolly
+6. When user closes the keyboard, the reverse happens and scroll jumps back to a position above.
 
-The solution obviously is to change slide height to a static value (eg. 800px). We believe there is no good stylistic reason to size slide according to window height. Even though we use a `div`, **slide** is really an abstract construct, it is a container to mark out the position of scene transition. Unless `background-color` applied on the container, user will not be able to any difference. Granted there are cases where we want slide height to be **at least** window height. In this case we should set slide height to a sufficiently big number (eg. 1200px) and include a `min-height: 100vh;` to handle edge case of very large display. On most mobile platform, the min height constraint will not be breached and slide height is effectively static.
+The solution: change slide height to a static value (eg. 800px). 

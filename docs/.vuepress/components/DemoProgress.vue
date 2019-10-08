@@ -2,11 +2,11 @@
   <st-scrolly class="demo-progress">
     <template v-slot:background="{slideIndex, progress}">
       <div class="centered">
-        <div class="card">
+        <div class="card two-rows">
           <code>progress()</code><br>
           = {{progress() | format}}
         </div>
-        <div class="card">
+        <div class="card two-rows">
           <code>progress(true)</code><br>
           = {{progress(true) | format}}
         </div>
@@ -35,8 +35,10 @@ export default {
   }
 
   .card {
-    padding: 20px 0;
-    line-height: 30px;
+    &.two-rows {
+      padding: 20px 0;
+      line-height: 30px;
+    }
 
     code {
       background-color: black;

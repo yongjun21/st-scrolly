@@ -425,6 +425,12 @@ User will pass in slide index *i* and transition distance *d* as parameters. The
 - The length over which *t* transit from 0 > 1 & 1 > 0 is controlled by the *d* parameter.
 
 ![enter & exit visualized](/assets/enter-exit.jpg)
+![enter & exit index visualized](/assets/enter-exit-index.jpg)
+
+```ts
+enter(i, d, o) === 1 - exit(i - 1, d, o)
+exit(i, d, o) === 1 - enter(i + 1, d, o)
+```
 :::
 
 ::: tip

@@ -45,7 +45,7 @@ const supportsSticky = (function () {
   templateUrl: './index.html',
   styleUrls: ['./index.css']
 })
-export class StScrolly implements OnInit, OnDestroy {
+export default class StScrolly implements OnInit, OnDestroy {
 
   @Input() windowHeight: number
   @Input() windowTop: number = 0

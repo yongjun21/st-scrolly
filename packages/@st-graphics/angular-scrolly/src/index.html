@@ -1,0 +1,21 @@
+<div class="st-scrolly" [class.active]="active">
+  <div class="background-container">
+    <div class="background" [ngStyle]="stickyStyle">
+      <ng-container *ngTemplateOutlet="backgroundTemplate; context:exposedScope"></ng-container>
+    </div>
+  </div>
+
+  <div #slides class="slide-container">
+    <ng-container *ngTemplateOutlet="slidesTemplate || defaultSlot; context:exposedScope"></ng-container>
+  </div>
+
+  <div class="foreground-container">
+    <div class="foreground" :style="stickyStyle">
+      <ng-container *ngTemplateOutlet="foregroundTemplate; context:exposedScope"></ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #defaultSlot>
+  <ng-content></ng-content>
+</ng-template>

@@ -26,19 +26,19 @@ declare namespace StScrolly {
     scrollLength: number;
     fromPrevSlide: number;
     toNextSlide: number;
-    enter: EnterExitFunction;
-    exit: EnterExitFunction;
-    progress: ProgressFunction;
+    enter: ExposedScope.enter;
+    exit: ExposedScope.exit;
+    progress: ExposedScope.progress
   }
 
-  export interface EnterExitFunction {
-    (index: number, distance?: number, offset?: number): number;
-  }
-
-  export interface ProgressFunction {
-    (endEarly?: boolean, offset?: number): number;
-    between (startIndex?: number, endIndex?: number): ProgressFunction;
-    at (index?: number): ProgressFunction;
+  export namespace ExposedScope {
+    export type enter = (index: number, distance?: number, offset?: number) => number
+    export type exit = (index: number, distance?: number, offset?: number) => number
+    export interface progress {
+      (endEarly?: boolean, offset?: number): number;
+      between (startIndex?: number, endIndex?: number): progress;
+      at (index?: number): progress;
+    }
   }
 }
 

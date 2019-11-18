@@ -1,6 +1,6 @@
 {
   "name": "@st-graphics/react-scrolly",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Opensource scrollytelling components used by Straits Times Interactive Graphics Team",
   "main": "dist/legacy.js",
   "module": "dist/index.js",

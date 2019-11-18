@@ -172,11 +172,13 @@ function applyPosition (props, state) {
 
 function frameRateLimited (cb, context) {
   let ready = true
+  let args
   function wrapped () {
+    args = arguments
     if (!ready) return
     ready = false
     window.requestAnimationFrame(() => {
-      cb.apply(this, arguments)
+      cb.apply(this, args)
       ready = true
     })
   }

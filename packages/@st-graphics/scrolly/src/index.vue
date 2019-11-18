@@ -148,7 +148,7 @@ export default {
   methods: {
     scrollTo (index, triggerBased = false) {
       if (index < 0 || index > this.slideHeights.length) return null
-      const initialPosition = window.scrollY + this.$el.getBoundingClientRect().top - this.windowTop
+      const initialPosition = window.scrollY + this.$refs.slides.getBoundingClientRect().top - this.windowTop
       const targetOffsetPosition = this.scrollCheckpoints[index] + (triggerBased ? this.triggerOffset : 0)
       return initialPosition + targetOffsetPosition + 1
     },
@@ -159,11 +159,11 @@ export default {
     },
     handleScroll () {
       this.measure()
-      this.scrollPosition = this.windowTop - this.$el.getBoundingClientRect().top
+      this.scrollPosition = this.windowTop - this.$refs.slides.getBoundingClientRect().top
     },
     handleResize () {
       this.measure()
-      this.scrollPosition = this.windowTop - this.$el.getBoundingClientRect().top
+      this.scrollPosition = this.windowTop - this.$refs.slides.getBoundingClientRect().top
       this.windowHeight_ = this.windowHeight || window.innerHeight
     }
   },
@@ -186,11 +186,13 @@ export function clamp (value, min, max) {
 
 function frameRateLimited (cb, context) {
   let ready = true
+  let args
   function wrapped () {
+    args = arguments
     if (!ready) return
     ready = false
     window.requestAnimationFrame(() => {
-      cb.apply(this, arguments)
+      cb.apply(this, args)
       ready = true
     })
   }

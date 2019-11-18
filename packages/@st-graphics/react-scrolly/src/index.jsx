@@ -36,7 +36,6 @@ const defaultProps = {
 }
 
 function StScrolly (props) {
-  const $el = useRef(null)
   const $slides = useRef(null)
 
   const [windowHeight, setWindowHeight] = useState(props.windowHeight || window.innerHeight)
@@ -67,12 +66,12 @@ function StScrolly (props) {
 
   const handleScroll = useCallback(() => {
     measure()
-    setScrollPosition(props.windowTop - $el.current.getBoundingClientRect().top)
+    setScrollPosition(props.windowTop - $slides.current.getBoundingClientRect().top)
   }, [measure, props.windowTop])
 
   const handleResize = useCallback(() => {
     measure()
-    setScrollPosition(props.windowTop - $el.current.getBoundingClientRect().top)
+    setScrollPosition(props.windowTop - $slides.current.getBoundingClientRect().top)
     setWindowHeight(props.windowHeight || window.innerHeight)
   }, [measure, props.windowHeight, props.windowTop])
 
@@ -104,7 +103,7 @@ function StScrolly (props) {
         : props.children
 
   return (
-    <div className={classNames(props.className, 'st-scrolly', {active})} ref={$el}>
+    <div className={classNames(props.className, 'st-scrolly', {active})}>
       <div className="background-container">
         <div className="background" style={stickyStyle}>
           {background}
@@ -220,11 +219,13 @@ function getStickyStyle (props, state) {
 
 function frameRateLimited (cb, context) {
   let ready = true
+  let args
   function wrapped () {
+    args = arguments
     if (!ready) return
     ready = false
     window.requestAnimationFrame(() => {
-      cb.apply(this, arguments)
+      cb.apply(this, args)
       ready = true
     })
   }

@@ -224,6 +224,7 @@ function clampedInterpolate (v, v0, v1) {
     width: 100%;
     position: -webkit-sticky;
     position: sticky;
+    transform: translate3d(0, 0, 0);
   }
 
   .background-container {

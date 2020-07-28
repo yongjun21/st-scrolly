@@ -34,8 +34,8 @@
     "sass": "^1.22.9",
     "sass-loader": "^7.1.0",
     "svelte": "^3.12.1",
-    "vue-template-compiler": "^2.6.10",
-    "vuepress": "^1.0.3"
+    "vue-template-compiler": "^2.6.11",
+    "vuepress": "^1.5.2"
   },
   "dependencies": {
     "@st-graphics/scrolly": "^0.0.4"

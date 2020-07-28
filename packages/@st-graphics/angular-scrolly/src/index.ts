@@ -200,8 +200,8 @@ export default class StScrolly implements OnInit, OnDestroy {
   }
 
   ngOnDestroy () {
-    window.removeEventListener('resize', this.handleResize)
-    window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('resize', this.handleResize, {capture: true, passive: true})
+    window.removeEventListener('scroll', this.handleScroll, {capture: true, passive: true})
   }
 }
 

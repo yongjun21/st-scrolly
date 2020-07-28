@@ -243,8 +243,8 @@ onMount(handleResize)
   pointer-events: none;
 }
 
-.st-scrolly .foreground *,
-.st-scrolly .slide * {
+.st-scrolly .foreground > *,
+.st-scrolly .slide > * {
   pointer-events: auto;
 }
 </style>

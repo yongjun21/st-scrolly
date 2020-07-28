@@ -82,8 +82,8 @@ function StScrolly (props) {
     window.addEventListener('resize', _handleResize, {capture: true, passive: true})
     window.addEventListener('scroll', _handleScroll, {capture: true, passive: true})
     return () => {
-      window.removeEventListener('resize', _handleResize)
-      window.removeEventListener('scroll', _handleScroll)
+      window.removeEventListener('resize', _handleResize, {capture: true, passive: true})
+      window.removeEventListener('scroll', _handleScroll, {capture: true, passive: true})
     }
   }, [handleScroll, handleResize])
 

@@ -38,8 +38,8 @@
     pointer-events: none;
   }
 
-  .foreground *,
-  .slide * {
+  .foreground > *,
+  .slide > * {
     pointer-events: auto;
   }
 }

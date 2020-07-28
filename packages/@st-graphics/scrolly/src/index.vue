@@ -175,8 +175,8 @@ export default {
     window.addEventListener('scroll', this.handleScroll, {capture: true, passive: true})
   },
   beforeDestroy () {
-    window.removeEventListener('resize', this.handleResize)
-    window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('resize', this.handleResize, {capture: true, passive: true})
+    window.removeEventListener('scroll', this.handleScroll, {capture: true, passive: true})
   }
 }
 
@@ -246,8 +246,8 @@ function clampedInterpolate (v, v0, v1) {
     pointer-events: none;
   }
 
-  .foreground *,
-  .slide * {
+  .foreground > *,
+  .slide > * {
     pointer-events: auto;
   }
 }

@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/yongjun21/st-scrolly#readme",
   "dependencies": {
-    "@types/react": "^16.9.2",
+    "@types/react": "^18.0.17",
     "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6"
+    "react": "^18.2.0"
   }
 }

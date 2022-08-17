@@ -141,6 +141,7 @@ function getExposedScope (props, state) {
                       : offsetPosition - scrollCheckpoints[slideIndex]
   const toNextSlide = offsetPosition >= scrollLength ? Infinity
                     : scrollCheckpoints[slideIndex + 1] - offsetPosition
+  const active = scrollPosition >= 0 && scrollPosition < scrollLength
 
   const enter = (index, distance = 0, offset = triggerOffset) => {
     if (index < 0) index += scrollCheckpoints.length - 1
@@ -187,7 +188,8 @@ function getExposedScope (props, state) {
     toNextSlide,
     enter,
     exit,
-    progress: getProgress(0, scrollCheckpoints.length - 1)
+    progress: getProgress(0, scrollCheckpoints.length - 1),
+    active
   }
 }
 

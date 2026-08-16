@@ -16,7 +16,7 @@ https://graphics.straitstimes.com/STI/STIMEDIA/Interactives/2019/08/ndr-2019-tra
 
 ## Documentations
 
-https://st-scrolly.netlify.com
+https://st-scrolly.netlify.app
 
 
 ## Sample repo

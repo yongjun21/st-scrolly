@@ -28,7 +28,8 @@ declare namespace StScrolly {
     toNextSlide: number;
     enter: ExposedScope.enter;
     exit: ExposedScope.exit;
-    progress: ExposedScope.progress
+    progress: ExposedScope.progress,
+    active: boolean
   }
 
   export namespace ExposedScope {
